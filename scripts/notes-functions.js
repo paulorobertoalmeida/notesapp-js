@@ -37,5 +37,45 @@ const generateNoteDom = (note) => {
     noteEl.setAttribute("href", "./edit.html#${note.id}")
     noteEl.classList.add("list-item")
 
-    
+    statusEl.textContent = generateLastEdited(note.updateAt)
+    statusEl.classList.add("list-item__subtitle")
+    noteEl.appendChild(statusEl)
+
+    return noteEl;
+}
+
+const sortNotes = (notes, sortBy) => {
+    if (sortBy === "byEdited"){
+        return notes.sort((a,b) => {
+            if (a.updateAt > b.updateAt){
+                return -1;
+            } else if (a.updateAt < b.updateAt){
+                return 1;
+            } else {
+                return 0;
+            }
+        })
+    } else if (sortBy === "byCreated") {
+        return notes.sort( (a,b) => {
+            if (a.createdAt > b.createdAt){
+                return -1;
+            } else if (a.createdAt < b.createdAt){
+                return 1;
+            } else {
+                return 0;
+            }
+        })
+    } else if (sortBy === "alphabetical") {
+        return notes.sort( (a,b) => {
+            if(a.title.toLowerCase() < b.title.toLowerCase()) {
+                return -1;
+            } else if (a.title.toLowerCase() > b.title.toLowerCase()){
+                return 1;
+            } else {
+                return 0;
+            }
+        })
+    } else {
+        return notes;
+    }
 }

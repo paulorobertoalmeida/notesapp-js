@@ -22,3 +22,23 @@ titleElement.addEventListener("input", () = > {
     timeElement.textContent = generateLastEdited(note.updatedAt);
     saveNotes(notes);
 })
+
+document.querySelector("#remove-note").addEventListener("click", () =>{
+    removeNote(note.id);
+    saveNotes(notes);
+    location.assign("./../index.html");
+})
+
+window.addEventListener("storage", (e) =>{
+    if(e.key === "notes"){
+        notes = JSON.parse(e.newValue);
+        note = notes.find( (note) => note.id === noteId);
+
+        if (!note){
+            location.assign("./../index.html");
+        }
+        timeElement.textContent = "Last edited ${moment(note.updatedAt).fromNew()}";
+        titleElement.value = note.title;
+        bodyElement.value = nota.body;
+    }
+})
